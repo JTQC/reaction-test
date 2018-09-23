@@ -9,6 +9,7 @@ window.onload = () => {
      let isStarted = false;
 
      let start = () => {
+         clearInterval(interval);
          interval = setInterval(timer, 10);
      }
 
@@ -74,33 +75,39 @@ window.onload = () => {
         return color;
     }
 
-    const testClick = () => {
-        console.log("clicked");
-        // stop();
-        // document.getElementById('tens').innerHTML = 00;
-        // document.getElementById('seconds').innerHTML = 00;
-        // start();
-        // generate();
-    }
 
     const generate = () => {
         let colorNum = rng();
-        document.getElementById('canvas').innerHTML = `<div id="target" class="${colorChange(colorNum)} br${rng(0, 4)} pa${rng(4, 7)} ma${rng(1, 7)} h${rng(3, 3)} w${rng(3, 3)}"></div>`;
+        document.getElementById('target').innerHTML = `<div class="${colorChange(colorNum)} br${rng(0, 4)} pa${rng(4, 7)} ma${rng(1, 7)} h${rng(3, 3)} w${rng(3, 3)}"></div>`;
     }
 
     document.getElementById('generate').onclick = () => {
         if(isStarted === false){
             start();
             generate();
-            isStarted === true;
+            isStarted = true;
             document.getElementById('generate').innerHTML = "Stop";
         }
         else if(isStarted === true){
             stop();
-            isStarted === false;
+            isStarted = false;
             document.getElementById('generate').innerHTML = "Start";
             document.getElementById('canvas').innerHTML = "";
         }
+    }
+
+    document.getElementById('target').onclick = () => {
+        stop();
+        document.getElementById('tens').innerHTML = 00;
+        document.getElementById('seconds').innerHTML = 00;
+        let x = tens;
+        let y = seconds;
+        tens = 0;
+        seconds = 0;
+        document.getElementById('y').innerHTML = x;
+        document.getElementById('x').innerHTML = y;
+        start();
+        generate();
     }
 
 //End
